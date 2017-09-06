@@ -23,6 +23,7 @@ $_['entry_ing_total'] = 'Gesamt:';
 $_['entry_ing_product'] = 'ING PSP Produkt:';
 $_['entry_cacert'] = 'Bundle cURL ca.cert:';
 $_['entry_send_webhook'] = 'Webhook-URL automatisch generieren:';
+$_['entry_order_captured'] = 'Bestellung gefangen:';
 
 /**
  * Text strings

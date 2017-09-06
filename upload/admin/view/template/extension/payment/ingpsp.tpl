@@ -201,6 +201,24 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label"
+                               for="input-ing_order_status_id_captured"><?php echo $entry_order_captured; ?></label>
+                        <div class="col-sm-10">
+                            <select name="ing_order_status_id_captured" class="form-control"
+                                    id="input-ing_order_status_id_captured">
+                                <?php foreach ($order_statuses as $order_status) { ?>
+                                <?php if ($order_status['order_status_id'] == $ing_order_status_id_captured) { ?>
+                                <option value="<?php echo $order_status['order_status_id']; ?>"
+                                        selected="selected"><?php echo $order_status['name']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
                                for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                         <div class="col-sm-10">
                             <input type="text" name="ing_sort_order"

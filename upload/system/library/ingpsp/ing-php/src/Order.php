@@ -12,7 +12,7 @@ use GingerPayments\Payment\Order\Transaction\PaymentMethod;
 use GingerPayments\Payment\Order\Transactions;
 use GingerPayments\Payment\Order\Customer;
 use GingerPayments\Payment\Order\Extra;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use GingerPayments\Payment\Order\OrderLines;
 
 final class Order
@@ -368,6 +368,7 @@ final class Order
      * @param array $customer Customer information
      * @param array $extra Extra information.
      * @param string $webhookUrl The webhook URL.
+     * @param array $orderLines Order lines.
      *
      * @return Order
      */
@@ -474,6 +475,49 @@ final class Order
             $amount,
             $currency,
             PaymentMethod::HOMEPAY,
+            $paymentMethodDetails,
+            $description,
+            $merchantOrderId,
+            $returnUrl,
+            $expirationPeriod,
+            $customer,
+            $extra,
+            $webhookUrl
+        );
+    }
+    
+    /**
+     * Create a new Order with the Payconiq payment method.
+     *
+     * @param integer $amount Amount in cents.
+     * @param string $currency A valid currency code.
+     * @param array $paymentMethodDetails An array of extra payment method details.
+     * @param string $description A descriptionyconiq of the order.
+     * @param string $merchantOrderId A merchant-defined order identifier.
+     * @param string $returnUrl The return URL.
+     * @param string $expirationPeriod The expiration period as an ISO 8601 duration.
+     * @param array $customer Customer information.
+     * @param array $extra Extra information.
+     * @param string $webhookUrl The webhook URL.
+     *
+     * @return Order
+     */
+    public static function createWithPayconiq(
+        $amount,
+        $currency,
+        array $paymentMethodDetails = [],
+        $description = null,
+        $merchantOrderId = null,
+        $returnUrl = null,
+        $expirationPeriod = null,
+        $customer = null,
+        $extra = null,
+        $webhookUrl = null
+    ) {
+        return static::create(
+            $amount,
+            $currency,
+            PaymentMethod::PAYCONIQ,
             $paymentMethodDetails,
             $description,
             $merchantOrderId,

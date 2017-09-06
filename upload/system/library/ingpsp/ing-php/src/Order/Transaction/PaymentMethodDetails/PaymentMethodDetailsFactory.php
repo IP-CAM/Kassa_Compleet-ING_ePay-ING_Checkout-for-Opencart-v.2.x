@@ -43,6 +43,10 @@ final class PaymentMethodDetailsFactory
         if ($paymentMethod->isHomePay()) {
             return HomePayPaymentMethodDetails::fromArray($paymentMethodDetails);
         }
+        
+        if ($paymentMethod->isPayconiq()) { 
+            return PayconiqPaymentMethodDetails::fromArray($paymentMethodDetails);
+        }
 
         throw new \InvalidArgumentException('Provided payment method not supported.');
     }

@@ -8,6 +8,7 @@ use GingerPayments\Payment\Common\ArrayFunctions;
 use GingerPayments\Payment\Ideal\Issuers;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
+use GingerPayments\Payment\Order\Transaction;
 
 final class Client
 {
@@ -97,7 +98,8 @@ final class Client
             'paypal' => 'paypal',
             'homepay' => 'homepay',
             'klarna' => 'klarna',
-            'sofort' => 'sofort'
+            'sofort' => 'sofort',
+            'payconiq' => 'payconiq'
         );
 
         foreach ($products_to_check as $permission_id => $id) {
@@ -262,6 +264,51 @@ final class Client
     ) {
         return $this->postOrder(
             Order::createWithSofort(
+                $amount,
+                $currency,
+                $paymentMethodDetails,
+                $description,
+                $merchantOrderId,
+                $returnUrl,
+                $expirationPeriod,
+                $customer,
+                $extra,
+                $webhookUrl
+            )
+        );
+    }
+    
+    
+    /**
+     * Create a new Payconiq order.
+     * 
+     * @param integer $amount Amount in cents.
+     * @param string $currency A valid currency code.
+     * @param array $paymentMethodDetails An array of extra payment method details.
+     * @param string $description A description of the order.
+     * @param string $merchantOrderId A merchant-defined order identifier.
+     * @param string $returnUrl The return URL.
+     * @param string $expirationPeriod The expiration period as an ISO 8601 duration
+     * @param array $customer Customer information.
+     * @param array $extra Extra information.
+     * @param string $webhookUrl The webhook URL.
+     *
+     * @return Order The newly created order.
+     */
+    public function createPayconicOrder(
+        $amount,
+        $currency,
+        array $paymentMethodDetails = [],
+        $description = null,
+        $merchantOrderId = null,
+        $returnUrl = null,
+        $expirationPeriod = null,
+        $customer = null,
+        $extra = null,
+        $webhookUrl = null
+    ) {
+        return $this->postOrder( 
+            Order::createWithPayconiq(
                 $amount,
                 $currency,
                 $paymentMethodDetails,
@@ -670,4 +717,35 @@ final class Client
             );
         }
     }
+    
+    /**
+     * update the order status to captured
+     * 
+     * @param  Order $order
+     * @throws OrderNotFoundException
+     * @throws ClientException
+     * @return Transaction
+     */
+    public function setOrderCapturedStatus(Order $order) 
+    {  
+        try {
+            return Transaction::fromArray($this->httpClient->post(
+                    "orders/".$order->id()."/transactions/".$order->transactions()->current()->id()->toString()."/captures/",
+                    [
+                        "timeout" => 30
+                    ]
+                )->json()
+            );
+        } catch (RequestException $exception) {
+            if ($exception->getCode() == 404) {
+                throw new OrderNotFoundException('No order with that ID was found.', 404, $exception);
+            }
+            throw new ClientException(
+                'An error occurred while updating the order: '.$exception->getMessage(),
+                $exception->getCode(),
+                $exception
+            );
+        }
+    }
+    
 }

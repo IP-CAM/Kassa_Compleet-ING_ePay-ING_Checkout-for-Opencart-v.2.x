@@ -2,7 +2,7 @@
 
 namespace GingerPayments\Payment\Order;
 
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Assert\Assertion as Guard;
 
 use GingerPayments\Payment\Order\OrderLine\Ean;

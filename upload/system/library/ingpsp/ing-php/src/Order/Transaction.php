@@ -13,7 +13,7 @@ use GingerPayments\Payment\Order\Transaction\PaymentMethodDetails;
 use GingerPayments\Payment\Order\Transaction\Reason;
 use GingerPayments\Payment\Order\Transaction\Status as TransactionStatus;
 use GingerPayments\Payment\Url;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 final class Transaction
 {

@@ -10,32 +10,12 @@ final class Ginger
     /**
      * The library version.
      */
-    const CLIENT_VERSION = '1.2.8';
+    const CLIENT_VERSION = '1.3.2';
 
     /**
      * The API version.
      */
     const API_VERSION = 'v1';
-
-    /**
-     * API endpoint Ginger Payments
-     */
-    const ENDPOINT_GINGER = 'https://api.gingerpayments.com/{version}/';
-
-    /**
-     * API Kassa Compleet endpoint
-     */
-    const ENDPOINT_KASSA = 'https://api.kassacompleet.nl/{version}/';
-
-    /**
-     * API endpoint ING
-     */
-    const ENDPOINT_ING = 'https://api.ing-checkout.com/{version}/';
-
-    /**
-     * API endpoint EPAY
-     */
-    const ENDPOINT_EPAY = 'https://api.epay.ing.be/{version}/';
 
     /**
      * Create a new API client.
@@ -80,19 +60,14 @@ final class Ginger
     {
         switch ($product) {
             case 'kassacompleet':
-                $endpoint = self::ENDPOINT_KASSA;
-                break;
+                return (new Client\EndpointResolver())->getEndpointKassa();
             case 'ingcheckout':
-                $endpoint = self::ENDPOINT_ING;
-                break;
+                return (new Client\EndpointResolver())->getEndpointIng();
             case 'epay':
-                $endpoint = self::ENDPOINT_EPAY;
-                break;
+                return (new Client\EndpointResolver())->getEndpointEpay();
             default:
-                $endpoint = self::ENDPOINT_GINGER;
-                break;
+                return (new Client\EndpointResolver())->getEndpointGinger();
         }
-        return $endpoint;
     }
 
     /**

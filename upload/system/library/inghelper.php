@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.2.6';
+    const PLUGIN_VERSION = '1.2.7';
 
     /**
      * Default currency for Order
@@ -29,6 +29,7 @@ class IngHelper
     const ING_STATUS_COMPLETED = 'completed';
     const ING_STATUS_CANCELLED = 'cancelled';
     const ING_STATUS_ERROR = 'error';
+    const ING_STATUS_CAPTURED = 'captured';
 
     /**
      * @param string $paymentMethod
@@ -85,6 +86,9 @@ class IngHelper
                 break;
             case IngHelper::ING_STATUS_ERROR:
                 $orderStatus = $config->get($this->getPaymentSettingsFieldName('order_status_id_error'));
+                break;
+            case IngHelper::ING_STATUS_CAPTURED:
+                $orderStatus = $config->get($this->getPaymentSettingsFieldName('order_status_id_captured'));
                 break;
             default:
                 $orderStatus = $config->get($this->getPaymentSettingsFieldName('order_status_id_new'));
@@ -531,5 +535,21 @@ class IngHelper
     public static function getPluginVersion()
     {
         return sprintf('OpenCart v%s', self::PLUGIN_VERSION);
+    }
+
+    /**
+     * Obtain ING PSP order id from order history.
+     *
+     * @param array $orderHistory
+     * @return mixed
+     */
+    public static function searchHistoryForOrderKey(array $orderHistory)
+    {
+        foreach ($orderHistory as $history) {
+            preg_match('/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/', $history['comment'], $orderKey);
+            if (count($orderKey) > 0) {
+                return $orderKey[0];
+            }
+        }
     }
 }

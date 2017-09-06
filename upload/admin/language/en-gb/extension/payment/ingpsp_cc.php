@@ -23,6 +23,7 @@ $_['entry_ing_total'] = 'Minimum order amount:';
 $_['entry_ing_product'] = 'ING PSP Product:';
 $_['entry_cacert'] = 'Bundle cURL ca.cert:';
 $_['entry_send_webhook'] = 'Generate webhook URL:';
+$_['entry_order_captured'] = 'Order Captured:';
 
 /**
  * Text strings

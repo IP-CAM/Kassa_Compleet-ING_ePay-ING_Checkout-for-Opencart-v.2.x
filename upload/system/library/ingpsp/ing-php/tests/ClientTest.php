@@ -565,4 +565,110 @@ final class ClientTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('GingerPayments\Payment\Client\ClientException');
         $this->client->getOrder('123456');
     }
+    
+    /**
+     * @test
+     */
+    public function itShouldSetOrderStatusToCaptured() 
+    {
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andReturn($this->httpResponse);
+        
+        $this->httpResponse->shouldReceive('json')
+            ->once()
+            ->andReturn(
+                [
+                    'payment_method' => 'credit-card',
+                    'payment_method_details' => [],
+                    'id' => '5ac3eb32-384d-4d61-a797-9f44b1cd70e5',
+                    'created' => '2015-03-07T20:58:35+0100',
+                    'modified' => '2015-03-07T21:58:35+0100',
+                    'completed' => '2015-03-07T22:58:35+0100',
+                    'status' => 'new',
+                    'reason' => 'A great reason',
+                    'currency' => 'EUR',
+                    'amount' => 100,
+                    'expiration_period' => 'P0Y0M0DT1H0M0S',
+                    'description' => 'A transaction',
+                    'balance' => 'internal',
+                    'payment_url' => 'http://www.example.com'
+                ]
+        );
+        
+        $this->assertInstanceOf(
+            'GingerPayments\Payment\Order\Transaction',
+            $this->client->setOrderCapturedStatus($this->createOrderWithTransactionsFormArray())
+        );
+         
+    }
+    
+    /**
+     * @test
+     */
+    public function itShouldThrowAnOrderNotFoundExceptionWhenSettingCapturedOrderStatus()
+    {
+        $request = m::mock('GuzzleHttp\Message\Request');
+        $response = m::mock('GuzzleHttp\Message\Response');
+        $response->shouldReceive('getStatusCode')->andReturn(404);
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andThrow(new HttpClientException('Something happened', $request, $response));
+
+        $this->setExpectedException('GingerPayments\Payment\Client\OrderNotFoundException');
+        $this->client->setOrderCapturedStatus($this->createOrderWithTransactionsFormArray());
+    }
+    
+    /**
+     * @test
+     */
+    public function itShouldThrowAClientExceptionWhenSettingCapturedOrderStatus()
+    {
+        $request = m::mock('GuzzleHttp\Message\Request');
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andThrow(new HttpClientException('Something happened', $request));
+
+        $this->setExpectedException('GingerPayments\Payment\Client\ClientException');
+        $this->client->setOrderCapturedStatus($this->createOrderWithTransactionsFormArray());
+    }
+    
+    /**
+     * Helper method for creating an order with transactions
+     * 
+     * @return Order
+     */
+    protected function createOrderWithTransactionsFormArray() {
+        $orderData = [
+            'transactions' => [
+                 [
+                    'payment_method' => 'credit-card',
+                    'payment_method_details' => [],
+                    'id' => '5ac3eb32-384d-4d61-a797-9f44b1cd70e5',
+                    'created' => '2015-03-07T20:58:35+0100',
+                    'modified' => '2015-03-07T21:58:35+0100',
+                    'completed' => '2015-03-07T22:58:35+0100',
+                    'status' => 'new',
+                    'reason' => 'A great reason',
+                    'currency' => 'EUR',
+                    'amount' => 100,
+                    'expiration_period' => 'P0Y0M0DT1H0M0S',
+                    'description' => 'A transaction',
+                    'balance' => 'internal',
+                    'payment_url' => 'http://www.example.com'
+                ]
+            ],
+            'amount' => 100,
+            'currency' => 'EUR',
+            'id' => 'c384b47e-7a5e-4c91-ab65-c4eed7f26e85',
+            'expiration_period' => 'PT10M',
+            'merchant_order_id' => '123',
+            'description' => "Test",
+            'return_url' => "http://example.com",
+        ];
+        return Order::fromArray($orderData);
+    }
+    
 }

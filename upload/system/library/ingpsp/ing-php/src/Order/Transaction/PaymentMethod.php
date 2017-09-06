@@ -20,6 +20,7 @@ final class PaymentMethod
     const KLARNA = 'klarna';
     const PAYPAL = 'paypal';
     const HOMEPAY = 'homepay';
+    const PAYCONIQ = 'payconiq';
 
     /**
      * @return array
@@ -35,7 +36,8 @@ final class PaymentMethod
             self::COD,
             self::KLARNA,
             self::PAYPAL,
-            self::HOMEPAY
+            self::HOMEPAY,
+            self::PAYCONIQ
         ];
     }
 
@@ -109,5 +111,13 @@ final class PaymentMethod
     public function isHomePay()
     {
         return $this->value === self::HOMEPAY;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isPayconiq()
+    {
+        return $this->value === self::PAYCONIQ;
     }
 }

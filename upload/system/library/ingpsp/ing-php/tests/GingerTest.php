@@ -3,6 +3,7 @@
 namespace GingerPayments\Payment\Tests;
 
 use GingerPayments\Payment\Ginger;
+use GingerPayments\Payment\Client\EndpointResolver;
 
 final class GingerTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +21,7 @@ final class GingerTest extends \PHPUnit_Framework_TestCase
         /** @var \GuzzleHttp\Client $httpClient */
         $httpClient = $reflectionProperty->getValue($client);
         $this->assertEquals(
-            str_replace('{version}', Ginger::API_VERSION, Ginger::ENDPOINT_GINGER),
+            str_replace('{version}', Ginger::API_VERSION, EndpointResolver::ENDPOINT_GINGER),
             $httpClient->getBaseUrl()
         );
         $this->assertEquals(

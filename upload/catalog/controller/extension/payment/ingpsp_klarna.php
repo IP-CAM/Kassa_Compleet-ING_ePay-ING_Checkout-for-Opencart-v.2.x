@@ -32,6 +32,46 @@ class ControllerExtensionPaymentIngpspKlarna extends Controller
         $this->ingHelper = new IngHelper(static::MODULE_NAME);
         $this->ing = $this->ingHelper->getClient($this->config);
     }
+    
+    /**
+     * Method is an event trigger for capturing Klarna shipped status.
+     *
+     * @param $route
+     * @param $data
+     */
+    public function capture($route, $data)
+    {
+        $this->load->model('account/order');
+        $this->load->model('checkout/order');
+
+        try {
+            $ingOrderId = IngHelper::searchHistoryForOrderKey(
+                $this->model_account_order->getOrderHistories(
+                    $this->request->get['order_id']
+                )
+            );
+
+            if ($ingOrderId) {
+
+                $order = $this->model_checkout_order->getOrder(
+                    $this->request->get['order_id']
+                );
+
+                $capturedStatus = $this->ingHelper->getOrderStatus(
+                    IngHelper::ING_STATUS_CAPTURED,
+                    $this->config
+                );
+
+                if ($order['order_status_id'] == $capturedStatus) {
+                    $this->ing->setOrderCapturedStatus(
+                        $this->ing->getOrder($ingOrderId)
+                    );
+                };
+            }
+        } catch (\Exception $e) {
+            $this->session->data['error'] = $e->getMessage();
+        }
+    }
 
     /**
      * Index Action

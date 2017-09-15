@@ -1,4 +1,4 @@
-# ING PSP plugin for OpenCart, v1.2.7
+# ING PSP plugin for OpenCart, v1.3.0
 You can use this plugin to accept payments in your webshop with Kassa Compleet, ING ePay and ING Checkout
 
 ## Pre-requisites to install the plug-ins: 

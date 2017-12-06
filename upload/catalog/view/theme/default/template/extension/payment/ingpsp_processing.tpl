@@ -17,7 +17,8 @@
         <?php } ?>
         <div id="content" class="<?php echo $class; ?>">
             <?php echo $content_top; ?>
-            <h1><?php echo $text_processing; ?></h1>
+            <h1><?php echo $order_description_text; ?></h1>
+            <h3><?php echo $text_processing; ?></h3>
             <p>
                 <?php echo $processing_message; ?>
             </p>

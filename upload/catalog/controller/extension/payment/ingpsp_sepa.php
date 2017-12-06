@@ -90,8 +90,8 @@ class ControllerExtensionPaymentIngpspSepa extends Controller
                 $data['ing_account_holder'] = $this->language->get('ing_account_holder').static::ING_HOLDER;
                 $data['ing_residence'] = $this->language->get('ing_residence').static::ING_RESIDENCE;
                 $data['text_description'] = $this->language->get('text_description');
-                $data['action'] = $this->url->link('checkout/success');
-
+                $data['action'] = $this->ingHelper->getSucceedUrl($this, $this->session->data['order_id']);
+                
                 return $this->load->view('extension/payment/'.static::MODULE_NAME, $data);
             }
         } catch (\Exception $e) {

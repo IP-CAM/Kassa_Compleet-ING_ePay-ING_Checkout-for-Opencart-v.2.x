@@ -67,7 +67,7 @@ class ControllerExtensionPaymentIngpspCod extends Controller
                 $data = [];
                 $data['button_confirm'] = $this->language->get('button_confirm');
                 $data['text_description'] = $this->language->get('text_description');
-                $data['action'] = $this->url->link('checkout/success');
+                $data['action'] = $this->ingHelper->getSucceedUrl($this, $this->session->data['order_id']);
 
                 return $this->load->view('extension/payment/'.static::MODULE_NAME, $data);
             }

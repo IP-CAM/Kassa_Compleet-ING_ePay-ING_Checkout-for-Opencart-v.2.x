@@ -106,7 +106,7 @@ class ControllerExtensionPaymentIngpspKlarna extends Controller
                     $this->session->data['error'] .= $this->language->get('error_another_payment_method');
                     $this->response->redirect($this->url->link('checkout/checkout'));
                 } elseif ($ingOrder->status()->isCancelled()) {
-                    $this->response->redirect($this->url->link('checkout/failure'));
+                    $this->response->redirect($this->ingHelper->getFailureUrl($this, $this->session->data['order_id']));
                 }
 
                 $this->model_checkout_order->addOrderHistory(
@@ -115,7 +115,7 @@ class ControllerExtensionPaymentIngpspKlarna extends Controller
                     'ING PSP Klarna order: '.$ingOrder->id()->toString(),
                     true
                 );
-                $this->response->redirect($this->url->link('checkout/success'));
+                $this->response->redirect($this->ingHelper->getSucceedUrl($this, $this->session->data['order_id']));
             }
         } catch (\Exception $e) {
             $this->session->data['error'] = $e->getMessage();

@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.3.0';
+    const PLUGIN_VERSION = '1.3.1';
 
     /**
      * Default currency for Order
@@ -138,11 +138,11 @@ class IngHelper
      * @param object $language
      * @return string
      */
-    public function getOrderDescription(array $orderInfo, $language)
+    public function getOrderDescription($orderId, $paymentMethod)
     {
-        $language->load('extension/payment/'.$this->paymentMethod);
-
-        return $language->get('text_transaction').$orderInfo['order_id'];
+        $paymentMethod->language->load('extension/payment/ingpsp_common');
+  
+        return sprintf($paymentMethod->language->get('text_your_order_at'), $orderId, $paymentMethod->config->get('config_name'));
     }
 
     /**
@@ -215,7 +215,7 @@ class IngHelper
             'currency' => $this->getCurrency(),
             'merchant_order_id' => $orderInfo['order_id'],
             'return_url' => $paymentMethod->url->link('extension/payment/'.$this->paymentMethod.'/callback'),
-            'description' => $this->getOrderDescription($orderInfo, $paymentMethod->language),
+            'description' => $this->getOrderDescription($orderInfo['order_id'], $paymentMethod),
             'customer' => $this->getCustomerInformation($orderInfo, $paymentMethod),
             'issuer_id' => $issuerId,
             'webhook_url' => $webhookUrl,
@@ -313,6 +313,7 @@ class IngHelper
     {
         $paymentMethod->load->language('extension/payment/'.$this->paymentMethod);
         $paymentMethod->load->language('checkout/success');
+        $paymentMethod->load->language('extension/payment/ingpsp_common');
 
         return [
             'breadcrumbs' => $this->getBreadcrumbs($paymentMethod),
@@ -326,6 +327,7 @@ class IngHelper
             'content_top' => $paymentMethod->load->controller('common/content_top'),
             'content_bottom' => $paymentMethod->load->controller('common/content_bottom'),
 
+            'order_description_text' => $this->getOrderDescription($this->getOrderIdFromPaymentMethod($paymentMethod), $paymentMethod),
             'text_processing' => $paymentMethod->language->get('text_processing'),
             'processing_message' => $paymentMethod->language->get('processing_message'),
             'pending_text' => $paymentMethod->language->get('pending_text'),
@@ -336,7 +338,17 @@ class IngHelper
             'continue' => $paymentMethod->url->link('common/home'),
         ];
     }
-
+    
+    /**
+     * @param $paymentMethod
+     * @return string
+     */
+    protected function getOrderIdFromPaymentMethod($paymentMethod)
+    {
+        $ingOrder = $paymentMethod->ing->getOrder($paymentMethod->request->get['order_id']);
+        return (!empty($ingOrder) && $ingOrder->getMerchantOrderId() !== null) ? $ingOrder->getMerchantOrderId() : '';
+    }
+    
     /**
      * @param $paymentMethod
      */
@@ -353,13 +365,43 @@ class IngHelper
                 true
             );
             if ($ingOrder->status()->isCompleted()) {
-                $paymentMethod->response->redirect($paymentMethod->url->link('checkout/success'));
+                $paymentMethod->response->redirect($this->getSucceedUrl($paymentMethod, $orderInfo['order_id']));
             } elseif ($ingOrder->status()->isProcessing() || $ingOrder->status()->isNew()) {
                 $paymentMethod->response->redirect($paymentMethod->ingHelper->getProcessingUrl($paymentMethod));
             } else {
-                $paymentMethod->response->redirect($paymentMethod->url->link('checkout/failure'));
+                $paymentMethod->response->redirect($this->getFailureUrl($paymentMethod, $orderInfo['order_id']));
             }
         }
+    }
+    
+    /**
+     * @param $paymentMethod
+     * @param int $orderId
+     * @return string
+     */
+    public function getSucceedUrl($paymentMethod, $orderId)
+    {
+        return htmlspecialchars_decode(
+            $paymentMethod->url->link(
+                'extension/payment/ingpsp_success',
+                ['order_id' => $orderId]
+            )
+        );
+    }
+    
+    /**
+     * @param $paymentMethod
+     * @param int $orderId
+     * @return string
+     */
+    public function getFailureUrl($paymentMethod, $orderId)
+    {
+        return htmlspecialchars_decode(
+            $paymentMethod->url->link(
+                'extension/payment/ingpsp_failure',
+                ['order_id' => $orderId]
+            )
+        );
     }
 
     /**
@@ -443,7 +485,8 @@ class IngHelper
                 'amount' => static::formatAmountToCents(
                     $paymentMethod->tax->calculate(
                         $item['price'],
-                        $item['tax_class_id'], true
+                        $item['tax_class_id'],
+                        true
                     )
                 ),
                 'currency' => \GingerPayments\Payment\Currency::EUR,
@@ -477,7 +520,8 @@ class IngHelper
             'amount' => static::formatAmountToCents(
                 $paymentMethod->tax->calculate(
                     $shippingMethod['cost'],
-                    $shippingMethod['tax_class_id'], true
+                    $shippingMethod['tax_class_id'],
+                    true
                 )
             ),
             'currency' => \GingerPayments\Payment\Currency::EUR,
@@ -503,7 +547,7 @@ class IngHelper
         $appliedTaxRates = $paymentMethod->tax->getRates($price, $taxClassId);
 
         if (count($appliedTaxRates) > 0) {
-            foreach ($appliedTaxRates AS $appliedTaxRate) {
+            foreach ($appliedTaxRates as $appliedTaxRate) {
                 $taxRate += $appliedTaxRate['rate'];
             }
         }
@@ -518,7 +562,6 @@ class IngHelper
     public static function ipIsEnabled($ipList)
     {
         if (strlen($ipList) > 0) {
-
             $ipWhitelist = array_map('trim', explode(',', $ipList));
 
             if (!in_array($_SERVER['REMOTE_ADDR'], $ipWhitelist)) {

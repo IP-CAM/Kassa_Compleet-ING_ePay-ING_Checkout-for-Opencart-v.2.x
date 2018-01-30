@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.3.2 **
+
+* Updated ing-php library to version 1.4.0 *
+
 ** 1.3.1 **
 
 * Added dynamic order descriptions *

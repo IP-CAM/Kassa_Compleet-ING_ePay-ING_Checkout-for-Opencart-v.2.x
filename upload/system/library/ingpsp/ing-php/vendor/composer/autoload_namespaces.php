@@ -7,8 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Verraes' => array($vendorDir . '/mathiasverraes/classfunctions/src'),
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
-    'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'IsoCodes' => array($vendorDir . '/ronanguilloux/isocodes/src'),
-    'Assert' => array($vendorDir . '/beberlei/assert/lib'),
 );

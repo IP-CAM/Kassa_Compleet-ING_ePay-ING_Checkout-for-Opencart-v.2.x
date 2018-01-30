@@ -21,6 +21,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -38,6 +39,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -55,6 +57,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -72,6 +75,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -89,6 +93,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -106,6 +111,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
 
     /**
@@ -123,6 +129,7 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertTrue($status->isExpired());
         $this->assertFalse($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
     }
     
     /**
@@ -140,5 +147,23 @@ final class StatusTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($status->isCancelled());
         $this->assertFalse($status->isExpired());
         $this->assertTrue($status->isCaptured());
+        $this->assertFalse($status->isDeclined());
+    }
+    
+    /**
+     * @test
+     */
+    public function itShouldBeDeclined()
+    {
+        $status = Status::fromString(Status::DECLINED);
+
+        $this->assertFalse($status->isNew());
+        $this->assertFalse($status->isPending());
+        $this->assertFalse($status->isProcessing());
+        $this->assertFalse($status->isError());
+        $this->assertFalse($status->isCompleted());
+        $this->assertFalse($status->isCancelled());
+        $this->assertFalse($status->isExpired());
+        $this->assertTrue($status->isDeclined());
     }
 }

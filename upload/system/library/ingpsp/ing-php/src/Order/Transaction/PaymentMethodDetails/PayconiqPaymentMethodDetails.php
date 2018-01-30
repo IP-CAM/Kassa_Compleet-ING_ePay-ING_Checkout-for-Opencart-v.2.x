@@ -24,7 +24,7 @@ final class PayconiqPaymentMethodDetails implements PaymentMethodDetails
     }
 
     /**
-     * HomePayPaymentMethodDetails constructor.
+     * PayconiqPaymentMethodDetails constructor.
      */
     private function __construct() {}
 }

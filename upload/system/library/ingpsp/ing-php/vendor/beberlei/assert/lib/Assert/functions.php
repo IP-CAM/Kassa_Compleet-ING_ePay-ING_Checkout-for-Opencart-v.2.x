@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Assert
  *
@@ -13,9 +14,9 @@
 
 namespace Assert;
 
-if (!function_exists(__NAMESPACE__ . '\that')) {
+if (!\function_exists(__NAMESPACE__ . '\that')) {
     /**
-     * Start validation on a value, returns {@link AssertionChain}
+     * Start validation on a value, returns {@link AssertionChain}.
      *
      * The invocation of this method starts an assertion chain
      * that is happening on the passed value.
@@ -33,53 +34,61 @@ if (!function_exists(__NAMESPACE__ . '\that')) {
      * @param string $defaultPropertyPath
      *
      * @return \Assert\AssertionChain
+     *
+     * @deprecated In favour of Assert::that($value, $defaultMessage = null, $defaultPropertyPath = null)
      */
     function that($value, $defaultMessage = null, $defaultPropertyPath = null)
     {
-        return new AssertionChain($value, $defaultMessage, $defaultPropertyPath);
+        return Assert::that($value, $defaultMessage, $defaultPropertyPath);
     }
 }
 
-if (!function_exists(__NAMESPACE__ . '\thatAll')) {
+if (!\function_exists(__NAMESPACE__ . '\thatAll')) {
     /**
-     * Start validation on a set of values, returns {@link AssertionChain}
+     * Start validation on a set of values, returns {@link AssertionChain}.
      *
      * @param mixed  $values
      * @param string $defaultMessage
      * @param string $defaultPropertyPath
      *
      * @return \Assert\AssertionChain
+     *
+     * @deprecated In favour of Assert::thatAll($values, $defaultMessage = null, $defaultPropertyPath = null)
      */
     function thatAll($values, $defaultMessage = null, $defaultPropertyPath = null)
     {
-        return that($values, $defaultMessage, $defaultPropertyPath)->all();
+        return Assert::that($values, $defaultMessage, $defaultPropertyPath)->all();
     }
 }
 
-if (!function_exists(__NAMESPACE__ . '\thatNullOr')) {
+if (!\function_exists(__NAMESPACE__ . '\thatNullOr')) {
     /**
-     * Start validation and allow NULL, returns {@link AssertionChain}
+     * Start validation and allow NULL, returns {@link AssertionChain}.
      *
      * @param mixed  $value
      * @param string $defaultMessage
      * @param string $defaultPropertyPath
      *
      * @return \Assert\AssertionChain
+     *
+     * @deprecated In favour of Assert::thatNullOr($value, $defaultMessage = null, $defaultPropertyPath = null)
      */
     function thatNullOr($value, $defaultMessage = null, $defaultPropertyPath = null)
     {
-        return that($value, $defaultMessage, $defaultPropertyPath)->nullOr();
+        return Assert::that($value, $defaultMessage, $defaultPropertyPath)->nullOr();
     }
 }
 
-if (!function_exists(__NAMESPACE__ . '\lazy')) {
+if (!\function_exists(__NAMESPACE__ . '\lazy')) {
     /**
      * Create a lazy assertion object.
      *
      * @return \Assert\LazyAssertion
+     *
+     * @deprecated In favour of Assert::lazy()
      */
     function lazy()
     {
-        return new LazyAssertion();
+        return Assert::lazy();
     }
 }

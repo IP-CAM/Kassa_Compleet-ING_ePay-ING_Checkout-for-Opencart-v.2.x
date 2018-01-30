@@ -26,7 +26,9 @@ final class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
             6 => ['array' => []],
             7 => [[]],
             'foo' => null,
-            'foo' => []
+            'baz' => [],
+            'bar' => 0,
+            []
         ];
 
         $expected = [
@@ -35,7 +37,8 @@ final class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
             3 => [
                 0 => 'foo',
                 2 => 'bar'
-            ]
+            ],
+            'bar' => 0
         ];
 
         $this->assertEquals($expected, ArrayFunctions::withoutNullValues($array));

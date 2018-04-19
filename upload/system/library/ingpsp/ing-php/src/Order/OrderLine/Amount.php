@@ -14,7 +14,7 @@ final class Amount
      */
     private function __construct($value)
     {
-        Guard::min($value, 1, 'Order line amount must be at least one');
+        Guard::integer($value, 'Order line amount must be a valid integer.');
 
         $this->value = $value;
     }

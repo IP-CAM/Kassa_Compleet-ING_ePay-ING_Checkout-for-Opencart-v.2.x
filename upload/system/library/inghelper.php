@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.3.2';
+    const PLUGIN_VERSION = '1.4.0';
 
     /**
      * Default currency for Order
@@ -47,13 +47,55 @@ class IngHelper
      */
     public function getClient($config)
     {
-        $ing = \GingerPayments\Payment\Ginger::createClient(
-            $config->get($this->getPaymentSettingsFieldName('test_api_key'))
+        return $this->getGignerClinet(
+                $config->get($this->getPaymentSettingsFieldName('api_key')),
+                $config->get($this->getPaymentSettingsFieldName('psp_product')),
+                $config->get($this->getPaymentSettingsFieldName('bundle_cacert'))
+               );
+    }
+    
+    /**
+     * @param object $config
+     * @return \GingerPayments\Payment\Client
+     */
+    public function getClientForAfterPay($config)
+    {
+        return $this->getGignerClinet(
+                $config->get($this->getPaymentSettingsFieldName('afterpay_test_api_key'))
                 ?: $config->get($this->getPaymentSettingsFieldName('api_key')),
-            $config->get($this->getPaymentSettingsFieldName('psp_product'))
-        );
+                $config->get($this->getPaymentSettingsFieldName('psp_product')),
+                $config->get($this->getPaymentSettingsFieldName('bundle_cacert'))
+               );
+    }
+    
+    /**
+     * @param object $config
+     * @return \GingerPayments\Payment\Client
+     */
+    public function getClientForKlarna($config)
+    {
+        return $this->getGignerClinet(
+                $config->get($this->getPaymentSettingsFieldName('klarna_test_api_key'))
+                ?: $config->get($this->getPaymentSettingsFieldName('api_key')),
+                $config->get($this->getPaymentSettingsFieldName('psp_product')),
+                $config->get($this->getPaymentSettingsFieldName('bundle_cacert'))
+               );
+    }
 
-        if ($config->get($this->getPaymentSettingsFieldName('bundle_cacert'))) {
+    
+    /**
+     * create a gigner clinet instance
+     *
+     * @param string $apiKey
+     * @param string $product
+     * @param boolean $useBundle
+     * @return \GingerPayments\Payment\Client
+     */
+    protected function getGignerClinet($apiKey, $product, $useBundle = false)
+    {
+        $ing = \GingerPayments\Payment\Ginger::createClient($apiKey, $product);
+
+        if ($useBundle) {
             $ing->useBundledCA();
         }
 

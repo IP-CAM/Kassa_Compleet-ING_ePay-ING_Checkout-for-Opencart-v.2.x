@@ -24,10 +24,6 @@ class ModelExtensionPaymentIngpspCc extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_cc_ip_filter'))) {
-            $status = false;
-        }
-
         $method_data = [];
 
         if ($status) {

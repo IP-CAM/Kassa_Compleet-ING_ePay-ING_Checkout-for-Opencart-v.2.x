@@ -528,6 +528,48 @@ final class Order
             $webhookUrl
         );
     }
+    
+    /**
+     * @param integer $amount Amount in cents.
+     * @param string $currency A valid currency code.
+     * @param string $description A description of the order.
+     * @param string $merchantOrderId A merchant-defined order identifier.
+     * @param string $returnUrl The return URL.
+     * @param string $expirationPeriod The expiration period as an ISO 8601 duration.
+     * @param array $customer Customer information
+     * @param array $extra Extra information.
+     * @param string $webhookUrl The webhook URL.
+     * @param array $orderLines Order lines.
+     *
+     * @return Order
+     */
+    public static function createWithAfterPay(
+        $amount,
+        $currency,
+        $description = null,
+        $merchantOrderId = null,
+        $returnUrl = null,
+        $expirationPeriod = null,
+        $customer = null,
+        $extra = null,
+        $webhookUrl = null,
+        $orderLines = null
+    ) {
+        return static::create(
+            $amount,
+            $currency,
+            PaymentMethod::AFTERPAY,
+            [],
+            $description,
+            $merchantOrderId,
+            $returnUrl,
+            $expirationPeriod,
+            $customer,
+            $extra,
+            $webhookUrl,
+            $orderLines
+        );
+    }
 
     /**
      * Create a new Order.

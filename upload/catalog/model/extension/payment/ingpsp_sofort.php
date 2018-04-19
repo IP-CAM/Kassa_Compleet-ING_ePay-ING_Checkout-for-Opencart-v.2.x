@@ -24,10 +24,6 @@ class ModelExtensionPaymentIngpspSofort extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_sofort_ip_filter'))) {
-            $status = false;
-        }
-
         $method_data = [];
 
         if ($status) {

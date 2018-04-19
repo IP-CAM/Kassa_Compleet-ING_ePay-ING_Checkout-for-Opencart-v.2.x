@@ -19,7 +19,7 @@ final class ArrayFunctions
                 $array[$key] = self::$fn($array[$key]);
             }
 
-            if ($array[$key] === null || count($array[$key]) === 0) {
+            if (empty($array[$key]) && $array[$key] !== '0' && $array[$key] !== 0) {
                 unset($array[$key]);
             }
         }

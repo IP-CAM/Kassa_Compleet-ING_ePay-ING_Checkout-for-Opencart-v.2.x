@@ -59,15 +59,56 @@
 
                     <?php if ($ingpsp_module == 'ingpsp_klarna'): ?>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-ing-test-api-key">
-                            <span data-toggle="tooltip" title="<?php echo $info_help_test_api_key; ?>">
-                                <?php echo $entry_test_api_key; ?>
+                        <label class="col-sm-2 control-label" for="input-ing-klarna-test-api-key">
+                            <span data-toggle="tooltip" title="<?php echo $info_help_klarna_test_api_key; ?>">
+                                <?php echo $entry_klarna_test_api_key; ?>
                             </span>
                         </label>
                         <div class="col-sm-10">
-                            <input type="text" name="ing_test_api_key" id="input-ing-test-api-key"
-                                   value="<?php echo $ing_test_api_key; ?>" size="50" class="form-control"
-                                   placeholder="<?php echo $info_help_test_api_key; ?>"/>
+                            <input type="text" name="ing_klarna_test_api_key" id="input-ing-klarna-test-api-key"
+                                   value="<?php echo $ing_klarna_test_api_key; ?>" size="50" class="form-control"
+                                   placeholder="<?php echo $info_help_klarna_test_api_key; ?>"/>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-klarna-ip-filter">
+                            <span data-toggle="tooltip" title="<?php echo $info_help_klarna_ip_filter; ?>">
+                                <?php echo $entry_klarna_ip_filter; ?>
+                            </span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="ing_klarna_ip_filter"
+                                   value="<?php echo $ing_klarna_ip_filter; ?>"
+                                   placeholder="<?php echo $ing_klarna_ip_filter; ?>"
+                                   id="input-klarna-ip-filter" class="form-control" />
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($ingpsp_module == 'ingpsp_afterpay'): ?>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-ing-afterpay-test-api-key">
+                            <span data-toggle="tooltip" title="<?php echo $info_help_afterpay_test_api_key; ?>">
+                                <?php echo $entry_afterpay_test_api_key; ?>
+                            </span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="ing_afterpay_test_api_key" id="input-ing-afterpay-test-api-key"
+                                   value="<?php echo $ing_afterpay_test_api_key; ?>" size="50" class="form-control"
+                                   placeholder="<?php echo $info_help_afterpay_test_api_key; ?>"/>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-afterpay-ip-filter">
+                            <span data-toggle="tooltip" title="<?php echo $info_help_afterpay_ip_filter; ?>">
+                                <?php echo $entry_afterpay_ip_filter; ?>
+                            </span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="ing_afterpay_ip_filter"
+                                   value="<?php echo $ing_afterpay_ip_filter; ?>"
+                                   placeholder="<?php echo $ing_afterpay_ip_filter; ?>"
+                                   id="input-afterpay-ip-filter" class="form-control" />
                         </div>
                     </div>
                     <?php endif; ?>
@@ -290,21 +331,6 @@
                             </label>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-ip-filter">
-                            <span data-toggle="tooltip" title="<?php echo $info_help_ip_filter; ?>">
-                                <?php echo $entry_ip_filter; ?>
-                            </span>
-                        </label>
-                        <div class="col-sm-10">
-                            <input type="text" name="ing_ip_filter"
-                                   value="<?php echo $ing_ip_filter; ?>"
-                                   placeholder="<?php echo $ing_ip_filter; ?>"
-                                   id="input-ip-filter" class="form-control" />
-                        </div>
-                    </div>
-
                 </form>
             </div>
         </div>

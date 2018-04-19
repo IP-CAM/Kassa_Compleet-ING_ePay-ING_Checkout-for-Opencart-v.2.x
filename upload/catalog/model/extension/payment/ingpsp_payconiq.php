@@ -24,10 +24,6 @@ class ModelExtensionPaymentIngpspPayconiq extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_payconiq_ip_filter'))) {
-            $status = false;
-        }
-
         $method_data = [];
 
         if ($status) {

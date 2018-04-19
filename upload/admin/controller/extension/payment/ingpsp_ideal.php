@@ -28,8 +28,10 @@ class ControllerExtensionPaymentIngpspIdeal extends Controller
         'total',
         'bundle_cacert',
         'send_webhook',
-        'ip_filter',
-        'test_api_key'
+        'klarna_ip_filter',
+        'klarna_test_api_key',
+        'afterpay_ip_filter',
+        'afterpay_test_api_key'
     ];
 
     /**
@@ -121,8 +123,10 @@ class ControllerExtensionPaymentIngpspIdeal extends Controller
             'heading_title' => $this->language->get('heading_title'),
             'text_edit_ing' => $this->language->get('text_edit_ing'),
             'info_help_api_key' => $this->language->get('info_help_api_key'),
-            'info_help_ip_filter' => $this->language->get('info_help_ip_filter'),
-            'info_help_test_api_key' => $this->language->get('info_help_test_api_key'),
+            'info_help_klarna_ip_filter' => $this->language->get('info_help_klarna_ip_filter'),
+            'info_help_klarna_test_api_key' => $this->language->get('info_help_klarna_test_api_key'),
+            'info_help_afterpay_ip_filter' => $this->language->get('info_help_afterpay_ip_filter'),
+            'info_help_afterpay_test_api_key' => $this->language->get('info_help_afterpay_test_api_key'),
             'info_help_total' => $this->language->get('info_help_total'),
             'entry_ing_api_key' => $this->language->get('entry_ing_api_key'),
             'entry_order_completed' => $this->language->get('entry_order_completed'),
@@ -138,8 +142,10 @@ class ControllerExtensionPaymentIngpspIdeal extends Controller
             'entry_ing_product' =>  $this->language->get('entry_ing_product'),
             'entry_cacert' =>  $this->language->get('entry_cacert'),
             'entry_send_webhook' =>  $this->language->get('entry_send_webhook'),
-            'entry_ip_filter' => $this->language->get('entry_ip_filter'),
-            'entry_test_api_key' => $this->language->get('entry_test_api_key'),
+            'entry_klarna_ip_filter' => $this->language->get('entry_klarna_ip_filter'),
+            'entry_afterpay_ip_filter' => $this->language->get('entry_afterpay_ip_filter'),
+            'entry_klarna_test_api_key' => $this->language->get('entry_klarna_test_api_key'),
+            'entry_afterpay_test_api_key' => $this->language->get('entry_afterpay_test_api_key'),
             'text_enabled' => $this->language->get('text_enabled'),
             'text_disabled' => $this->language->get('text_disabled'),
             'button_save' => $this->language->get('text_button_save'),

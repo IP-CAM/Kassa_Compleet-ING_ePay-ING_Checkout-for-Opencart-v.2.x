@@ -48,6 +48,10 @@ final class PaymentMethodDetailsFactory
             return PayconiqPaymentMethodDetails::fromArray($paymentMethodDetails);
         }
 
+        if ($paymentMethod->isAfterPay()) { 
+            return AfterPayPaymentMethodDetails::fromArray($paymentMethodDetails);
+        }
+
         throw new \InvalidArgumentException('Provided payment method not supported.');
     }
 }

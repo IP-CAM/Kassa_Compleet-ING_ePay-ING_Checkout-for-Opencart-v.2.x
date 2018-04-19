@@ -21,6 +21,7 @@ final class PaymentMethod
     const PAYPAL = 'paypal';
     const HOMEPAY = 'homepay';
     const PAYCONIQ = 'payconiq';
+    const AFTERPAY = 'afterpay';
 
     /**
      * @return array
@@ -37,7 +38,8 @@ final class PaymentMethod
             self::KLARNA,
             self::PAYPAL,
             self::HOMEPAY,
-            self::PAYCONIQ
+            self::PAYCONIQ,
+            self::AFTERPAY
         ];
     }
 
@@ -119,5 +121,13 @@ final class PaymentMethod
     public function isPayconiq()
     {
         return $this->value === self::PAYCONIQ;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isAfterPay()
+    {
+        return $this->value === self::AFTERPAY;
     }
 }

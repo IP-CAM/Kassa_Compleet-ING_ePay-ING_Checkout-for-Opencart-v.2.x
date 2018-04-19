@@ -1,5 +1,12 @@
 # Changelog OpenCart
 
+** 1.4.0 **
+
+* Added AfterPay 
+
+* Klarna helper class refactored
+
+
 ** 1.3.2 **
 
 * Updated ing-php library to version 1.4.0 *

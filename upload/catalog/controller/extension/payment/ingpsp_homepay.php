@@ -61,6 +61,7 @@ class ControllerExtensionPaymentIngpspHomePay extends Controller
                 $ingOrder = $this->createOrder($ingOrderData);
 
                 if ($ingOrder->status()->isError()) {
+                    $this->language->load('extension/payment/'.static::MODULE_NAME);
                     $this->session->data['error'] = $ingOrder->transactions()->current()->reason()->toString();
                     $this->session->data['error'] .= $this->language->get('error_another_payment_method');
                     $this->response->redirect($this->url->link('checkout/checkout'));

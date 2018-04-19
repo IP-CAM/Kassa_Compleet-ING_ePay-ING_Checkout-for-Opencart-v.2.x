@@ -24,7 +24,7 @@ class ModelExtensionPaymentIngpspKlarna extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_klarna_ip_filter'))) {
+        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_klarna_klarna_ip_filter'))) {
             $status = false;
         }
 

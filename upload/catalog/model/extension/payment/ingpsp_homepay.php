@@ -6,7 +6,8 @@ class ModelExtensionPaymentIngpspHomepay extends Model
     {
         $this->load->language('extension/payment/ingpsp_homepay');
 
-        $query = $this->db->query("SELECT * 
+        $query = $this->db->query(
+            "SELECT * 
             FROM ".DB_PREFIX."zone_to_geo_zone 
             WHERE geo_zone_id = '".(int) $this->config->get('ingpsp_homepay_geo_zone_id')."' 
             AND country_id = '".(int) $address['country_id']."' 
@@ -21,10 +22,6 @@ class ModelExtensionPaymentIngpspHomepay extends Model
         } elseif ($query->num_rows) {
             $status = true;
         } else {
-            $status = false;
-        }
-
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_homepay_ip_filter'))) {
             $status = false;
         }
 

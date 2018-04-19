@@ -24,10 +24,6 @@ class ModelExtensionPaymentIngpspSepa extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_sepa_ip_filter'))) {
-            $status = false;
-        }
-
         $method_data = [];
 
         if ($status) {

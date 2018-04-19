@@ -24,10 +24,6 @@ class ModelExtensionPaymentIngpspIdeal extends Model
             $status = false;
         }
 
-        if (!IngHelper::ipIsEnabled($this->config->get('ingpsp_ideal_ip_filter'))) {
-            $status = false;
-        }
-
         $method_data = [];
 
         if ($status) {

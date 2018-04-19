@@ -76,6 +76,34 @@ final class PaymentMethodDetailsFactoryTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+    
+    /**
+     * @test
+     */
+    public function itShouldCreateAPayconiqPaymentMethodDetails()
+    {
+        $this->assertInstanceOf(
+            'GingerPayments\Payment\Order\Transaction\PaymentMethodDetails\PayconiqPaymentMethodDetails',
+            PaymentMethodDetailsFactory::createFromArray(
+                PaymentMethod::fromString(PaymentMethod::PAYCONIQ),
+                []
+            )
+        );
+    }
+    
+    /**
+     * @test
+     */
+    public function itShouldCreateAAfterPayPaymentMethodDetails()
+    {
+        $this->assertInstanceOf(
+            'GingerPayments\Payment\Order\Transaction\PaymentMethodDetails\AfterPayPaymentMethodDetails',
+            PaymentMethodDetailsFactory::createFromArray(
+                PaymentMethod::fromString(PaymentMethod::AFTERPAY),
+                []
+            )
+        );
+    }
 
     /**
      * @test

@@ -99,7 +99,8 @@ final class Client
             'homepay' => 'homepay',
             'klarna' => 'klarna',
             'sofort' => 'sofort',
-            'payconiq' => 'payconiq'
+            'payconiq' => 'payconiq',
+            'afterpay' => 'afterpay'
         );
 
         foreach ($products_to_check as $permission_id => $id) {
@@ -577,6 +578,50 @@ final class Client
         );
     }
 
+    /**
+     * Create a new AfterPay order.
+     *
+     * @param integer $amount            Amount in cents.
+     * @param string  $currency          A valid currency code.
+     * @param string  $description       A description of the order.
+     * @param string  $merchantOrderId   A merchant-defined order identifier.
+     * @param string  $returnUrl         The return URL.
+     * @param string  $expirationPeriod  The expiration period as an ISO 8601 duration
+     * @param array   $customer          Customer information.
+     * @param array   $extra             Extra information.
+     * @param string  $webhookUrl        The webhook URL.
+     * @param array   $orderLines        Order lines
+     *
+     * @return Order The newly created order.
+     */
+    public function createAfterPayOrder(
+        $amount,
+        $currency,
+        $description = null,
+        $merchantOrderId = null,
+        $returnUrl = null,
+        $expirationPeriod = null,
+        $customer = null,
+        $extra = null,
+        $webhookUrl = null,
+        $orderLines = null
+    ) {
+        return $this->postOrder(
+            Order::createWithAfterPay(
+                $amount,
+                $currency,
+                $description,
+                $merchantOrderId,
+                $returnUrl,
+                $expirationPeriod,
+                $customer,
+                $extra,
+                $webhookUrl,
+                $orderLines
+            )
+        );
+    }
+    
     /**
      * Create a new order.
      *

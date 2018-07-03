@@ -150,7 +150,7 @@ class IngHelper
             ? $paymentMethod->request->post['gender'] : null;
 
         $dob = array_key_exists('dob', $paymentMethod->request->post)
-            ? $paymentMethod->request->post['dob'] : null;
+            ? date("Y-m-d", strtotime($paymentMethod->request->post['dob'])) : null;
 
         $customer = \GingerPayments\Payment\Common\ArrayFunctions::withoutNullValues([
             'address_type' => 'customer',

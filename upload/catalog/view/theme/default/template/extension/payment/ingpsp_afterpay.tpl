@@ -12,7 +12,7 @@
     <div class="form-group required  col-sm-4">
         <label class="col-sm-6 control-label" for="dob"><?php echo $text_please_enter_dob; ?>:</label>
         <div class="col-sm-6">
-            <input type="text" name="dob" id="dob" placeholder="yyyy-mm-dd" class="form-control"/>
+            <input type="text" name="dob" id="dob" placeholder="dd-mm-yyyy" class="form-control"/>
         </div>
     </div>
  
@@ -40,7 +40,7 @@ $(document).delegate('#afterpay-button-payment', 'click', function(e) {
         valid =false;
         $('#collapse-checkout-confirm .panel-body').prepend('<div class="alert alert-danger">' + '<?php echo $text_error_please_accept_tc; ?>' + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     }
-    if (!$('#dob').val().match(/^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/)) {
+    if (!$('#dob').val().match(/^(0[1-9]|[12][0-9]|3[01])\-(0[1-9]|1[012])\-[0-9]{4}/)) {
         valid =false;
         $('#collapse-checkout-confirm .panel-body').prepend('<div class="alert alert-danger">' + '<?php echo $text_error_invalid_dob; ?>' + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     } 

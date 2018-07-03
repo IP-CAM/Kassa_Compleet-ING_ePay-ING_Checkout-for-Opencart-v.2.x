@@ -15,10 +15,10 @@ $_['pending_text'] = 'Betaling in behandeling';
 $_['pending_message'] = 'We hebben nog geen bevestiging van uw bank of kaartuitgever ontvangen.';
 $_['pending_message_sub'] = 'U ontvangt een bericht zodra we deze hebben ontvangen.';
 
-$_['text_i_accept'] = 'Ik accepteer AfterPay';
-$_['text_terms_and_conditions'] = 'Gebruiksvoorwaarden';
-$_['text_please_enter_dob'] = 'Invoeren uw geboortedatum AUB';
-$_['text_please_select_gender'] = 'Geschlecht';
+$_['text_i_accept'] = 'Ik accepteer de';
+$_['text_terms_and_conditions'] = 'betaalvoorwaarden van AfterPay';
+$_['text_please_enter_dob'] = 'Geboortedatum';
+$_['text_please_select_gender'] = 'Geslacht';
 $_['text_please_select_gender_male'] = 'Man';
 $_['text_please_select_gender_female'] = 'Vrouw';
 

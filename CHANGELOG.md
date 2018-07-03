@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.1 **
+
+* Updates for DOB parsing
+
 ** 1.4.0 **
 
 * Added AfterPay 

@@ -1,19 +1,15 @@
 <form action="<?php echo $action; ?>" method="post" id="afterpay-form-payment">
     <div class="form-group required col-sm-4">
         <label class="col-sm-6 control-label" for="gender"><?php echo $text_please_select_gender; ?>:</label>
-        <div class="col-sm-6">
-            <select name="gender" class="form-control">
-                <option value="male"><?php echo $text_please_select_gender_male; ?></option>
-                <option value="female"><?php echo $text_please_select_gender_female; ?></option>
-            </select>
-        </div>
+        <select name="gender" class="form-control">
+            <option value="male"><?php echo $text_please_select_gender_male; ?></option>
+            <option value="female"><?php echo $text_please_select_gender_female; ?></option>
+        </select>
     </div>
  
     <div class="form-group required  col-sm-4">
         <label class="col-sm-6 control-label" for="dob"><?php echo $text_please_enter_dob; ?>:</label>
-        <div class="col-sm-6">
-            <input type="text" name="dob" id="dob" placeholder="dd-mm-yyyy" class="form-control"/>
-        </div>
+        <input type="text" name="dob" id="dob" placeholder="dd-mm-yyyy" class="form-control"/>
     </div>
  
     <div class="form-group required  col-sm-4"> 

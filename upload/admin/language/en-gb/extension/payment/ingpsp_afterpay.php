@@ -3,7 +3,7 @@
 /**
  * General Admin Settings Page
  */
-$_['heading_title'] = 'ING PSP: Afterpay';
+$_['heading_title'] = 'ING PSP: AfterPay';
 $_['text_ingpsp_afterpay'] = '<img src="view/image/payment/ingpsp.png" alt="ING PSP" title="ING PSP" />';
 $_['text_extension'] = 'Extensions';
 
@@ -34,8 +34,8 @@ $_['text_enabled'] = 'Enabled';
 $_['text_disabled'] = 'Disabled';
 $_['text_payments'] = 'Payments';
 $_['text_issuer_id'] = 'SWIFT/BIC';
-$_['text_settings_saved'] = 'ING PSP: Afterpay settings updated!';
-$_['text_edit_ing'] = 'Edit ING PSP: Afterpay Settings';
+$_['text_settings_saved'] = 'ING PSP: AfterPay settings updated!';
+$_['text_edit_ing'] = 'Edit ING PSP: AfterPay Settings';
 $_['text_yes'] = 'Yes';
 $_['text_no'] = 'No';
 
@@ -49,7 +49,7 @@ $_['error_missing_api_key'] = 'ING PSP API Key is required!';
  */
 $_['info_help_api_key'] = 'Get your ING PSP API key from Payments merchant portal.';
 $_['info_help_total'] = 'The payment method will only be presented if the total checkout amount of an order is higher than this threshold.';
-$_['info_plugin_not_configured'] = 'ING PSP: Afterpay plugin is not configured.';
+$_['info_plugin_not_configured'] = 'ING PSP: AfterPay plugin is not configured.';
 $_['info_help_afterpay_ip_filter'] = 'If entered, only for those IPs payment method will be displayed. (Example: 128.0.0.1, 255.255.255.255)';
 $_['entry_afterpay_ip_filter'] = 'IP Filtering:';
 $_['entry_afterpay_test_api_key'] = 'Test API Key:';

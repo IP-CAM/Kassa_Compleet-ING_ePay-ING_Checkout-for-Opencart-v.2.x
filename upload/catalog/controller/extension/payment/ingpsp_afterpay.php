@@ -141,7 +141,7 @@ class ControllerExtensionPaymentIngpspAfterPay extends Controller
                 $this->model_checkout_order->addOrderHistory(
                     $ingOrder->getMerchantOrderId(),
                     $this->ingHelper->getOrderStatus($ingOrder->getStatus(), $this->config),
-                    'ING PSP Afterpay order: '.$ingOrder->id()->toString(),
+                    'ING PSP AfterPay order: '.$ingOrder->id()->toString(),
                     true
                 );
                 $this->response->redirect($this->ingHelper->getSucceedUrl($this, $this->session->data['order_id']));

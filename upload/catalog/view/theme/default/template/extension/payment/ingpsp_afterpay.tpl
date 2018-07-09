@@ -16,7 +16,7 @@
         <div class="col-sm-1">
             <input type="checkbox" name="ap_terms_and_conditions" id="ap_terms_and_conditions" />
         </div>
-        <label class="col-sm-10 control-label" for="ap_terms_and_conditions"><?php echo $text_i_accept; ?> <a class="agree" href="<?php echo $terms_conditions_url; ?>" target="_blank"><?php echo $text_terms_and_conditions; ?></a></label>
+        <label class="col-sm-10 control-label" for="ap_terms_and_conditions"><?php echo $text_i_accept; ?> <a href="<?php echo $terms_conditions_url; ?>" target="_blank"><?php echo $text_terms_and_conditions; ?></a></label>
     </div>
 
     <div class="form-group pull-right col-sm-12">

@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.3 **
+
+* Make link clickable
+
 ** 1.4.2 **
 
 * Fix displaying of AfterPay inputs

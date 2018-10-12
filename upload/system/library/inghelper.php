@@ -169,7 +169,19 @@ class IngHelper
             'locale' => self::formatLocale($orderInfo['language_code']),
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'gender' => $gender,
-            'birthdate' => $dob
+            'birthdate' => $dob,
+            'additional_addresses' => [
+                [
+                    'address_type' => 'billing',
+                    'address' => implode("\n", array_filter(array(
+                $orderInfo['payment_company'],
+                $orderInfo['payment_address_1'],
+                $orderInfo['payment_address_2'],
+                $orderInfo['payment_postcode']." ".$orderInfo['payment_city']
+            ))),
+                    'country' => $orderInfo['payment_iso_code_2'],
+                ],
+            ]
         ]);
 
         return $customer;

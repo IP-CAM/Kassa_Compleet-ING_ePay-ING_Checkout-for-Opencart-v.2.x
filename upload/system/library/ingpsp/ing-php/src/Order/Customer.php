@@ -12,6 +12,8 @@ use GingerPayments\Payment\Order\Customer\PostalCode;
 use GingerPayments\Payment\Order\Customer\Housenumber;
 use GingerPayments\Payment\Order\Customer\Country;
 use GingerPayments\Payment\Order\Customer\PhoneNumbers;
+use GingerPayments\Payment\Order\Customer\AdditionalAddresses;
+use GingerPayments\Payment\Order\Customer\AdditionalAddress;
 use GingerPayments\Payment\Order\Customer\Locale;
 use GingerPayments\Payment\Order\Customer\Birthdate;
 use GingerPayments\Payment\Order\Customer\Gender;
@@ -70,6 +72,11 @@ final class Customer
     private $phoneNumbers;
 
     /**
+     * @var AdditionalAddresses|null
+     */
+    private $additionalAddresses;
+
+    /**
      * @var Locale|null
      */
     private $locale;
@@ -107,6 +114,7 @@ final class Customer
             array_key_exists('housenumber', $details) ? Housenumber::fromString($details['housenumber']) : null,
             array_key_exists('country', $details) ? Country::fromString($details['country']) : null,
             array_key_exists('phone_numbers', $details) ? PhoneNumbers::fromArray($details['phone_numbers']) : null,
+            array_key_exists('additional_addresses', $details) ? AdditionalAddresses::fromArray($details['additional_addresses']) : null,
             array_key_exists('locale', $details) ? Locale::fromString($details['locale']) : null,
             array_key_exists('gender', $details) ? Gender::fromString($details['gender']) : null,
             array_key_exists('birthdate', $details) ? Birthdate::fromString($details['birthdate']) : null,
@@ -131,6 +139,7 @@ final class Customer
             'housenumber' => ($this->housenumber() !== null) ? $this->housenumber()->toString() : null,
             'country' => ($this->country() !== null) ? $this->country()->toString() : null,
             'phone_numbers' => ($this->phoneNumbers() !== null) ? $this->phoneNumbers()->toArray() : [],
+            'additional_addresses' => ($this->AdditionalAddresses() !== null) ? $this->AdditionalAddresses()->toArray() : [],
             'locale' => ($this->locale() !== null) ? $this->locale()->toString() : null,
             'gender' => ($this->gender() !== null) ? $this->gender()->toString() : null,
             'birthdate' => ($this->birthdate() !== null) ? $this->birthdate()->toString() : null,
@@ -218,6 +227,11 @@ final class Customer
         return $this->phoneNumbers;
     }
 
+    public function additionalAddresses()
+    {
+        return $this->additionalAddresses;
+    }
+
     /**
      * @return Locale|null
      */
@@ -261,6 +275,7 @@ final class Customer
      * @param Housenumber $housenumber
      * @param Country $country
      * @param PhoneNumbers $phoneNumbers
+     * @param AdditionalAddresses $additionalAddresses
      * @param Locale $locale
      * @param Gender $gender
      * @param Birthdate $birthdate
@@ -277,6 +292,7 @@ final class Customer
         Housenumber $housenumber = null,
         Country $country = null,
         PhoneNumbers $phoneNumbers = null,
+        AdditionalAddresses $additionalAddresses = null,
         Locale $locale = null,
         Gender $gender = null,
         Birthdate $birthdate = null,
@@ -292,6 +308,7 @@ final class Customer
         $this->housenumber = $housenumber;
         $this->country = $country;
         $this->phoneNumbers = $phoneNumbers;
+        $this->additionalAddresses = $additionalAddresses;
         $this->locale = $locale;
         $this->gender = $gender;
         $this->birthdate = $birthdate;

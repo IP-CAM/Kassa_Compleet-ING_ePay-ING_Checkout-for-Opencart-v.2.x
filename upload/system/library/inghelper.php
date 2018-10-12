@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.4.3';
+    const PLUGIN_VERSION = '1.4.4';
 
     /**
      * Default currency for Order

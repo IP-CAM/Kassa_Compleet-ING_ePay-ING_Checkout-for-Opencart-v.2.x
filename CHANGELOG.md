@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.4 **
+
+* Add additional address field
+
 ** 1.4.3 **
 
 * Make link clickable

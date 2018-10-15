@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.5 **
+
+* Bugfix, send in shipping address and not only billing address
+
 ** 1.4.4 **
 
 * Add additional address field

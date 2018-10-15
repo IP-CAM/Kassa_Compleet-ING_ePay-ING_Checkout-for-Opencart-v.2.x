@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.4.4';
+    const PLUGIN_VERSION = '1.4.5';
 
     /**
      * Default currency for Order
@@ -161,10 +161,10 @@ class IngHelper
             'merchant_customer_id' => $orderInfo['customer_id'],
             'phone_numbers' => [$orderInfo['telephone']],
             'address' => implode("\n", array_filter(array(
-                $orderInfo['payment_company'],
-                $orderInfo['payment_address_1'],
-                $orderInfo['payment_address_2'],
-                $orderInfo['payment_postcode']." ".$orderInfo['payment_city']
+                $orderInfo['shipping_company'],
+                $orderInfo['shipping_address_1'],
+                $orderInfo['shipping_address_2'],
+                $orderInfo['shipping_postcode']." ".$orderInfo['shipping_city']
             ))),
             'locale' => self::formatLocale($orderInfo['language_code']),
             'ip_address' => $_SERVER['REMOTE_ADDR'],

@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.6 **
+
+* Bugfix, also send in miscellaneous orderlines
+
 ** 1.4.5 **
 
 * Bugfix, send in shipping address and not only billing address

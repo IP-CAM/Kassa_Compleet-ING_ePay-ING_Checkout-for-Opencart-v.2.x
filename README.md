@@ -14,7 +14,7 @@ With this official ING plugin you can connect your webshop to the following ING 
 - ING Checkout for the Corporate market
 
 ## Version number
-Version 1.4.5
+Version 1.4.6
 
 ## Pre-requisites to install the plug-ins: 
 - PHP v5.4 and above

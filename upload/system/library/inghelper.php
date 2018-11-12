@@ -8,7 +8,7 @@ class IngHelper
     /**
      * ING PSP OpenCart plugin version
      */
-    const PLUGIN_VERSION = '1.4.6';
+    const PLUGIN_VERSION = '1.4.7';
 
     /**
      * Default currency for Order
@@ -264,8 +264,10 @@ class IngHelper
         $issuerId = array_key_exists('issuer_id', $paymentMethod->request->post)
             ? $paymentMethod->request->post['issuer_id'] : null;
 
+        $total_amount_in_cents = $this->getAmountInCents($orderInfo, $paymentMethod->currency);
+
         return [
-            'amount' => $this->getAmountInCents($orderInfo, $paymentMethod->currency),
+            'amount' => $total_amount_in_cents,
             'currency' => $this->getCurrency(),
             'merchant_order_id' => $orderInfo['order_id'],
             'return_url' => $paymentMethod->url->link('extension/payment/'.$this->paymentMethod.'/callback'),
@@ -274,7 +276,7 @@ class IngHelper
             'issuer_id' => $issuerId,
             'webhook_url' => $webhookUrl,
             'payment_info' => [],
-            'order_lines' => $this->getOrderLines($orderInfo, $paymentMethod),
+            'order_lines' => $this->getOrderLines($orderInfo, $paymentMethod, $total_amount_in_cents),
             'plugin_version' => ['plugin' => static::getPluginVersion()]
         ];
     }
@@ -526,56 +528,52 @@ class IngHelper
      * @param $paymentMethod
      * @return array
      */
-    public function getOrderLines($orderInfo, $paymentMethod)
+    public function getOrderLines($orderInfo, $paymentMethod, $totalAmountInCents)
     {
         $total_amount = 0;
         $paymentMethod->load->model('tool/image');
         $orderLines = [];
 
         foreach ($paymentMethod->cart->getProducts() as $item) {
-            $orderLines[] = [
-                'url' => $paymentMethod->url->link('product/product', 'product_id='.$item['product_id']),
-                'name' => $item['name'],
-                'type' => \GingerPayments\Payment\Order\OrderLine\Type::PHYSICAL,
-                'amount' => static::formatAmountToCents(
+            $amount = static::formatAmountToCents(
                     $paymentMethod->tax->calculate(
                         $item['price'],
                         $item['tax_class_id'],
                         true
                     )
-                ),
+                );
+            $orderLines[] = [
+                'url' => $paymentMethod->url->link('product/product', 'product_id='.$item['product_id']),
+                'name' => $item['name'],
+                'type' => \GingerPayments\Payment\Order\OrderLine\Type::PHYSICAL,
+                'amount' => $amount,
                 'currency' => \GingerPayments\Payment\Currency::EUR,
                 'quantity' => $item['quantity'],
                 'image_url' => $paymentMethod->model_tool_image->resize($item['image'], 100, 100),
                 'vat_percentage' => $this->getOrderLineTaxRate($paymentMethod, $item['price'], $item['tax_class_id']),
                 'merchant_order_line_id' => $item['product_id']
             ];
-            $total_amount += $item['quantity'] * $paymentMethod->tax->calculate($item['price'], $item['tax_class_id'], true);
+            $total_amount += $amount * $item['quantity'];
         }
 
         if (array_key_exists('shipping_method', $paymentMethod->session->data)
             && intval($paymentMethod->session->data['shipping_method']['cost']) > 0
         ) {
-            $orderLines[] = $this->getShippingOrderLine($paymentMethod);
-            $total_amount += $paymentMethod->session->data['shipping_method']['cost'];
+            $shipping_costs = $this->getShippingOrderLine($paymentMethod);
+            $orderLines[] = $shipping_costs;
+            $total_amount += $shipping_costs['amount'];
         }
 
-        $total = $paymentMethod->currency->format(
-            $orderInfo['total'],
-            $orderInfo['currency_code'],
-            $orderInfo['currency_value'],
-            false
-        );
-        if (($total_amount - $total) != 0) {
+        if (($totalAmountInCents - $total_amount) != 0) {
             $orderLines[] = [
                 'name' => 'Overig',
                 'type' => \GingerPayments\Payment\Order\OrderLine\Type::PHYSICAL,
-                'amount' => static::formatAmountToCents($total - $total_amount),
+                'amount' => $totalAmountInCents - $total_amount,
                 'currency' => \GingerPayments\Payment\Currency::EUR,
                 'quantity' => 1,
                 'vat_percentage' => 2100,
                 'merchant_order_line_id' => 'miscellaneous',
-            ];            
+            ];
         }
         return $orderLines;
     }

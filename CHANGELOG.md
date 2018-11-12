@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.7 **
+
+* Consistency fix; use the same values to calculate totals preventing a rounding error
+
 ** 1.4.6 **
 
 * Bugfix, also send in miscellaneous orderlines

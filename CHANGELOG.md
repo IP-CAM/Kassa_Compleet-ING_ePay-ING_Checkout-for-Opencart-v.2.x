@@ -1,5 +1,9 @@
 # Changelog OpenCart
 
+** 1.4.8 **
+
+* Fixed validation of IBAN and URL for certain PHP versions
+
 ** 1.4.7 **
 
 * Consistency fix; use the same values to calculate totals preventing a rounding error
